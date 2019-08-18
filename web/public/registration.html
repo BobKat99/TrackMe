@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />            
+        <meta charset="utf-8" />
+        <meta name="description" content="A frontend dashboard for the TrackMe application" />
+        <meta name="Bob La" content="BOB LA" />
+        <meta name="viewport" content="width=device-width, initialscale=1.0">
+        <title>Registraion</title>
+    </head>
+    <body>
+        <div class="container">  
+                    <div id="navbar"></div>
+                    <div id="footer"></div>
+            <h1>Registraion</h1>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" />
+        </div>
+        <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" class="form-control" id="password" />
+        </div>
+        <div class="form-group">
+            <label for="name">Confirm password</label>
+            <input type="text" class="form-control" id="confirm-password" />
+        </div>  
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModal" id="register">Register</button>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                    <div class="alert alert-warning alert-dismissible fade show" id="message">
+                    </div>
+            </div>
+        </div>
+        <p>Already have an account? Login <a href="/login">here</a></p>
+            
+               
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
