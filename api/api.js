@@ -1,5 +1,6 @@
 const express = require('express');
 const Device = require('./models/device');
+const User = require('./models/user');
 const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -34,6 +35,7 @@ app.get('/api/devices', (req, res) => {
         ? res.send(err)       
         : res.send(devices);   
     }); 
+
     /**
 * @api {get} /api/devices AllDevices An array of all devices
 * @apiGroup Device
@@ -84,10 +86,65 @@ app.post('/api/devices', (req, res) => {
     });
 });
 
-app.post('/api/devices', (req, res) => {  
-    console.log(req.body);
-});  
+app.post('/api/authenticate', (req, res) => {   
+    const { name, password } = req.body;
 
+    User.findOne({name, password}, (err, users) => {     
+        if (err == true) return res.send(err);
+        else if (users == undefined) return res.send('user does not exist');
+        else return res.json({
+            success: true,
+            message: 'authenicated successfully',
+            isAdmin: users.isAdmin
+        });
+    }); 
+});
+
+app.post('/api/registration', (req, res) => {  
+    const { name, password, isAdmin } = req.body;
+    User.findOne({name, password, isAdmin}, (err, users) => {
+        if (err == true) return res.send(err);
+        else if (users == undefined) 
+        {
+        const newUser = new User({
+            name,
+            password,
+            isAdmin
+           });
+    
+        newUser.save(err => {
+            return err
+                ? res.send(err)
+                : res.json({
+                success: true,
+                message: 'Created new user'
+                });
+        });  
+    }
+        else return res.send('User exist')
+    }); 
+    
+      
+});
+
+app.get('/api/devices/:deviceId/device-history', (req, res) => {
+    const { deviceId } = req.params;
+    Device.findOne({"_id": deviceId }, (err, devices) => {
+    const { sensorData } = devices;
+    return err
+        ? res.send(err)
+        : res.send(sensorData);
+        });
+});
+
+app.get('/api/users/:user/devices', (req, res) => {
+    const { user } = req.params;
+    Device.find({ "user": user }, (err, devices) => {
+        return err
+        ? res.send(err)
+        : res.send(devices);
+    });
+});
 app.get('/docs', (req, res) => {
  res.sendFile(`${__dirname}/public/generated-docs/index.html`);
 });

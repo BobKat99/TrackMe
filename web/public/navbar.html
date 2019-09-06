@@ -16,11 +16,11 @@
 </div> 
 </nav> 
 <script>   
-    const isAuthenticated = localStorage.getItem('isAuthenticated');   
+    const user = localStorage.getItem('user');   
     const logoutElement = '<a class="nav-item nav-link" onClick="logout()">Logout</a>';   
     const loginElement = '<a class="nav-item nav-link" href="/login">Login</a>'; 
  
-    isAuthenticated     
+    user    
     ? $('#auth-nav').append(logoutElement)     
     : $('#auth-nav').append(loginElement); 
 </script>
